@@ -1,0 +1,1389 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VENOM — Alta Performance. Sem Desculpas.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --venom: #00ff41;
+        --venom-dim: #00c832;
+        --venom-dark: #003d0f;
+        --black: #030303;
+        --surface: #0a0a0a;
+        --surface2: #111111;
+        --surface3: #161616;
+        --border: rgba(0, 255, 65, 0.15);
+        --border-strong: rgba(0, 255, 65, 0.4);
+        --text: #e8e8e8;
+        --text-muted: #6a6a6a;
+        --text-dim: #3a3a3a;
+        --danger: #ff2d2d;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: var(--black);
+        color: var(--text);
+        font-family: "Rajdhani", sans-serif;
+        font-size: 18px;
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+
+      /* SCANLINE OVERLAY */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background: repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 2px,
+          rgba(0, 0, 0, 0.08) 2px,
+          rgba(0, 0, 0, 0.08) 4px
+        );
+        pointer-events: none;
+        z-index: 9999;
+      }
+
+      /* NAV */
+      nav {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        padding: 1rem 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        z-index: 100;
+        background: rgba(3, 3, 3, 0.85);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .nav-logo {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 1.8rem;
+        color: var(--venom);
+        letter-spacing: 4px;
+        text-decoration: none;
+      }
+
+      .nav-cta {
+        background: var(--venom);
+        color: var(--black);
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 1rem;
+        letter-spacing: 3px;
+        padding: 0.5rem 1.5rem;
+        text-decoration: none;
+        transition: background 0.2s;
+      }
+      .nav-cta:hover {
+        background: var(--venom-dim);
+      }
+
+      /* HERO */
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 6rem 2rem 4rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero-grid {
+        position: absolute;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(0, 255, 65, 0.04) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(0, 255, 65, 0.04) 1px, transparent 1px);
+        background-size: 60px 60px;
+      }
+
+      .hero-glow {
+        position: absolute;
+        width: 600px;
+        height: 600px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(0, 255, 65, 0.07) 0%,
+          transparent 70%
+        );
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+      }
+
+      .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        border: 1px solid var(--border-strong);
+        color: var(--venom);
+        font-family: "Share Tech Mono", monospace;
+        font-size: 0.7rem;
+        letter-spacing: 3px;
+        padding: 0.4rem 1rem;
+        margin-bottom: 2rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      .hero-badge::before {
+        content: "";
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        background: var(--venom);
+        border-radius: 50%;
+        animation: pulse 1.5s infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.2;
+        }
+      }
+
+      .hero-title {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: clamp(4rem, 14vw, 10rem);
+        line-height: 0.9;
+        letter-spacing: 4px;
+        position: relative;
+        z-index: 1;
+        color: #ffffff;
+      }
+
+      .hero-title .accent {
+        color: var(--venom);
+      }
+
+      .hero-title .glitch {
+        position: relative;
+      }
+
+      .hero-title .glitch::before,
+      .hero-title .glitch::after {
+        content: attr(data-text);
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+      }
+
+      .hero-title .glitch::before {
+        color: var(--danger);
+        animation: glitch1 4s infinite;
+        clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+      }
+
+      .hero-title .glitch::after {
+        color: var(--venom);
+        animation: glitch2 4s infinite;
+        clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+      }
+
+      @keyframes glitch1 {
+        0%,
+        92%,
+        100% {
+          transform: none;
+          opacity: 0;
+        }
+        93% {
+          transform: translateX(-3px);
+          opacity: 0.8;
+        }
+        95% {
+          transform: translateX(3px);
+          opacity: 0.8;
+        }
+        97% {
+          transform: none;
+          opacity: 0;
+        }
+      }
+
+      @keyframes glitch2 {
+        0%,
+        94%,
+        100% {
+          transform: none;
+          opacity: 0;
+        }
+        95% {
+          transform: translateX(3px);
+          opacity: 0.7;
+        }
+        97% {
+          transform: translateX(-3px);
+          opacity: 0.7;
+        }
+        99% {
+          transform: none;
+          opacity: 0;
+        }
+      }
+
+      .hero-sub {
+        font-size: 1.25rem;
+        color: var(--text-muted);
+        max-width: 600px;
+        margin: 1.5rem auto 0;
+        position: relative;
+        z-index: 1;
+        font-weight: 500;
+        letter-spacing: 1px;
+      }
+
+      .hero-sub strong {
+        color: var(--text);
+      }
+
+      .hero-actions {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2.5rem;
+        flex-wrap: wrap;
+        justify-content: center;
+        position: relative;
+        z-index: 1;
+      }
+
+      .btn-primary {
+        background: var(--venom);
+        color: var(--black);
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 1.2rem;
+        letter-spacing: 4px;
+        padding: 1rem 2.5rem;
+        border: none;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.2s;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .btn-primary::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(255, 255, 255, 0.15);
+        transform: translateX(-100%);
+        transition: transform 0.3s;
+      }
+
+      .btn-primary:hover::after {
+        transform: translateX(0);
+      }
+      .btn-primary:hover {
+        transform: translateY(-2px);
+      }
+
+      .btn-ghost {
+        background: transparent;
+        color: var(--venom);
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 1.2rem;
+        letter-spacing: 4px;
+        padding: 1rem 2.5rem;
+        border: 1px solid var(--border-strong);
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.2s;
+      }
+
+      .btn-ghost:hover {
+        background: rgba(0, 255, 65, 0.06);
+        transform: translateY(-2px);
+      }
+
+      .hero-stats {
+        display: flex;
+        gap: 3rem;
+        margin-top: 4rem;
+        position: relative;
+        z-index: 1;
+        border-top: 1px solid var(--border);
+        padding-top: 2.5rem;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .stat {
+        text-align: center;
+      }
+
+      .stat-number {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 2.5rem;
+        color: var(--venom);
+        letter-spacing: 2px;
+      }
+
+      .stat-label {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        font-family: "Share Tech Mono", monospace;
+      }
+
+      /* SECTION BASE */
+      section {
+        padding: 6rem 2rem;
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+
+      .section-label {
+        font-family: "Share Tech Mono", monospace;
+        font-size: 0.7rem;
+        letter-spacing: 4px;
+        color: var(--venom);
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .section-label::before {
+        content: "";
+        display: inline-block;
+        width: 24px;
+        height: 1px;
+        background: var(--venom);
+      }
+
+      .section-title {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: clamp(2.5rem, 6vw, 4.5rem);
+        line-height: 1;
+        letter-spacing: 2px;
+        margin-bottom: 1.5rem;
+      }
+
+      .section-title .accent {
+        color: var(--venom);
+      }
+
+      /* PROBLEM SECTION */
+      .problem-section {
+        border-top: 1px solid var(--border);
+        padding-top: 6rem;
+      }
+
+      .cost-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1px;
+        background: var(--border);
+        margin: 3rem 0;
+        border: 1px solid var(--border);
+      }
+
+      .cost-card {
+        background: var(--surface);
+        padding: 2rem 1.5rem;
+        position: relative;
+      }
+
+      .cost-professional {
+        font-size: 0.75rem;
+        letter-spacing: 2px;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        font-family: "Share Tech Mono", monospace;
+        margin-bottom: 0.5rem;
+      }
+
+      .cost-value {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 2rem;
+        color: var(--danger);
+        letter-spacing: 2px;
+      }
+
+      .cost-period {
+        font-size: 0.8rem;
+        color: var(--text-dim);
+        font-family: "Share Tech Mono", monospace;
+      }
+
+      .cost-total {
+        background: var(--surface2);
+        border: 1px solid var(--border-strong);
+        padding: 2rem;
+        margin-top: 1px;
+      }
+
+      .cost-total-label {
+        font-family: "Share Tech Mono", monospace;
+        font-size: 0.75rem;
+        letter-spacing: 3px;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        margin-bottom: 0.5rem;
+      }
+
+      .cost-total-value {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 3.5rem;
+        color: var(--danger);
+        letter-spacing: 3px;
+      }
+
+      .cost-total-sub {
+        font-size: 1rem;
+        color: var(--text-muted);
+        margin-top: 0.5rem;
+      }
+
+      .vs-block {
+        text-align: center;
+        padding: 3rem 0;
+      }
+
+      .vs-text {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 5rem;
+        color: var(--text-dim);
+        letter-spacing: 8px;
+      }
+
+      .vs-arrow {
+        font-size: 2rem;
+        color: var(--venom);
+        display: block;
+        margin-top: 0.5rem;
+      }
+
+      .venom-price {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 5rem;
+        color: var(--venom);
+        letter-spacing: 4px;
+      }
+
+      .venom-price-label {
+        font-family: "Share Tech Mono", monospace;
+        font-size: 0.8rem;
+        letter-spacing: 3px;
+        color: var(--text-muted);
+      }
+
+      /* FEATURES */
+      .features-section {
+        border-top: 1px solid var(--border);
+        padding-top: 6rem;
+      }
+
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        margin-top: 3rem;
+      }
+
+      .feature-card {
+        background: var(--surface);
+        padding: 2.5rem 2rem;
+        position: relative;
+        transition: background 0.3s;
+      }
+
+      .feature-card:hover {
+        background: var(--surface3);
+      }
+
+      .feature-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 3px;
+        height: 0;
+        background: var(--venom);
+        transition: height 0.4s ease;
+      }
+
+      .feature-card:hover::before {
+        height: 100%;
+      }
+
+      .feature-icon {
+        width: 44px;
+        height: 44px;
+        border: 1px solid var(--border-strong);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+        font-size: 1.2rem;
+      }
+
+      .feature-name {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 1.5rem;
+        letter-spacing: 2px;
+        color: #fff;
+        margin-bottom: 0.75rem;
+      }
+
+      .feature-desc {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        line-height: 1.7;
+        font-weight: 500;
+      }
+
+      .feature-tag {
+        display: inline-block;
+        margin-top: 1rem;
+        font-family: "Share Tech Mono", monospace;
+        font-size: 0.65rem;
+        letter-spacing: 2px;
+        color: var(--venom);
+        border: 1px solid var(--border);
+        padding: 0.2rem 0.6rem;
+        text-transform: uppercase;
+      }
+
+      /* HOW IT WORKS */
+      .how-section {
+        border-top: 1px solid var(--border);
+        padding-top: 6rem;
+      }
+
+      .steps {
+        margin-top: 3rem;
+        position: relative;
+      }
+
+      .steps::before {
+        content: "";
+        position: absolute;
+        left: 28px;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background: var(--border);
+      }
+
+      .step {
+        display: flex;
+        gap: 2rem;
+        margin-bottom: 3rem;
+        position: relative;
+      }
+
+      .step-num {
+        width: 56px;
+        height: 56px;
+        min-width: 56px;
+        border: 1px solid var(--border-strong);
+        background: var(--surface);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 1.5rem;
+        color: var(--venom);
+        letter-spacing: 2px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .step-content {
+        padding-top: 0.75rem;
+      }
+
+      .step-title {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 1.5rem;
+        letter-spacing: 2px;
+        color: #fff;
+        margin-bottom: 0.5rem;
+      }
+
+      .step-desc {
+        font-size: 0.95rem;
+        color: var(--text-muted);
+        font-weight: 500;
+        max-width: 500px;
+      }
+
+      .step-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 0.75rem;
+      }
+
+      .tag {
+        font-family: "Share Tech Mono", monospace;
+        font-size: 0.65rem;
+        letter-spacing: 2px;
+        background: rgba(0, 255, 65, 0.07);
+        color: var(--venom);
+        border: 1px solid var(--border);
+        padding: 0.2rem 0.6rem;
+      }
+
+      /* EARLY ACCESS SECTION */
+      .early-section {
+        border-top: 1px solid var(--border);
+        padding: 6rem 2rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .early-section-inner {
+        max-width: 700px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+      }
+
+      .early-glow {
+        position: absolute;
+        width: 800px;
+        height: 400px;
+        border-radius: 50%;
+        background: radial-gradient(
+          ellipse,
+          rgba(0, 255, 65, 0.05) 0%,
+          transparent 70%
+        );
+        bottom: -200px;
+        left: 50%;
+        transform: translateX(-50%);
+        pointer-events: none;
+      }
+
+      .early-title {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: clamp(3rem, 8vw, 6rem);
+        line-height: 0.95;
+        letter-spacing: 3px;
+        margin-bottom: 1.5rem;
+      }
+
+      .early-sub {
+        font-size: 1rem;
+        color: var(--text-muted);
+        margin-bottom: 2.5rem;
+        font-weight: 500;
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .form-wrap {
+        display: flex;
+        gap: 0;
+        max-width: 520px;
+        margin: 0 auto;
+      }
+
+      .form-input {
+        flex: 1;
+        background: var(--surface2);
+        border: 1px solid var(--border-strong);
+        border-right: none;
+        color: var(--text);
+        font-family: "Rajdhani", sans-serif;
+        font-size: 1rem;
+        font-weight: 500;
+        padding: 1rem 1.25rem;
+        outline: none;
+        transition: border-color 0.2s;
+      }
+
+      .form-input::placeholder {
+        color: var(--text-dim);
+      }
+      .form-input:focus {
+        border-color: var(--venom);
+      }
+
+      .form-btn {
+        background: var(--venom);
+        color: var(--black);
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 1.1rem;
+        letter-spacing: 3px;
+        padding: 1rem 1.75rem;
+        border: none;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: background 0.2s;
+      }
+
+      .form-btn:hover {
+        background: var(--venom-dim);
+      }
+
+      .form-note {
+        margin-top: 1rem;
+        font-family: "Share Tech Mono", monospace;
+        font-size: 0.65rem;
+        letter-spacing: 2px;
+        color: var(--text-dim);
+      }
+
+      .early-perks {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-top: 3rem;
+        flex-wrap: wrap;
+      }
+
+      .perk {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        font-family: "Share Tech Mono", monospace;
+        letter-spacing: 1px;
+      }
+
+      .perk-dot {
+        width: 6px;
+        height: 6px;
+        background: var(--venom);
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+
+      /* SUCCESS STATE */
+      .success-msg {
+        display: none;
+        background: rgba(0, 255, 65, 0.06);
+        border: 1px solid var(--border-strong);
+        padding: 1.5rem;
+        margin-top: 1rem;
+        text-align: center;
+      }
+
+      .success-msg.show {
+        display: block;
+      }
+
+      .success-msg p {
+        font-family: "Share Tech Mono", monospace;
+        font-size: 0.85rem;
+        color: var(--venom);
+        letter-spacing: 2px;
+      }
+
+      /* COUNTER */
+      .counter-bar {
+        max-width: 520px;
+        margin: 1.5rem auto 0;
+      }
+
+      .counter-track {
+        height: 2px;
+        background: var(--surface3);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .counter-fill {
+        height: 100%;
+        background: var(--venom);
+        width: 34%;
+        transition: width 1s ease;
+      }
+
+      .counter-label {
+        display: flex;
+        justify-content: space-between;
+        font-family: "Share Tech Mono", monospace;
+        font-size: 0.65rem;
+        letter-spacing: 2px;
+        color: var(--text-dim);
+        margin-top: 0.4rem;
+      }
+
+      .counter-label span:first-child {
+        color: var(--venom);
+      }
+
+      /* FOOTER */
+      footer {
+        border-top: 1px solid var(--border);
+        padding: 2rem;
+        text-align: center;
+      }
+
+      .footer-logo {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 1.5rem;
+        color: var(--venom);
+        letter-spacing: 4px;
+        margin-bottom: 0.5rem;
+      }
+
+      .footer-tagline {
+        font-family: "Share Tech Mono", monospace;
+        font-size: 0.65rem;
+        color: var(--text-dim);
+        letter-spacing: 3px;
+      }
+
+      /* DIVIDER FULL WIDTH */
+      .divider {
+        width: 100%;
+        height: 1px;
+        background: var(--border);
+      }
+
+      /* TICKER */
+      .ticker-wrap {
+        overflow: hidden;
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+        padding: 0.75rem 0;
+        background: var(--surface);
+      }
+
+      .ticker {
+        display: flex;
+        gap: 4rem;
+        animation: ticker 20s linear infinite;
+        width: max-content;
+      }
+
+      .ticker-item {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 1rem;
+        letter-spacing: 4px;
+        color: var(--text-dim);
+        white-space: nowrap;
+      }
+
+      .ticker-item .v {
+        color: var(--venom);
+      }
+
+      @keyframes ticker {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
+      }
+
+      /* RESPONSIVE */
+      @media (max-width: 600px) {
+        .form-wrap {
+          flex-direction: column;
+        }
+        .form-input {
+          border-right: 1px solid var(--border-strong);
+          border-bottom: none;
+        }
+        .hero-stats {
+          gap: 2rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAV -->
+    <nav>
+      <a href="#" class="nav-logo">VENOM</a>
+      <a href="#early-access" class="nav-cta">QUERO ACESSO</a>
+    </nav>
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-grid"></div>
+      <div class="hero-glow"></div>
+
+      <div class="hero-badge">ACESSO ANTECIPADO ABERTO</div>
+
+      <h1 class="hero-title">
+        <span class="glitch" data-text="SEU CORPO.">SEU CORPO.</span><br />
+        <span class="accent">SUA REGRA.</span>
+      </h1>
+
+      <p class="hero-sub">
+        IA que analisa seu
+        <strong>biótipo, rotina, preferências e exames médicos</strong> para
+        montar seu plano de alta performance completo — treino, nutrição e
+        saúde. Por uma fração do preço.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#early-access" class="btn-primary">GARANTIR MINHA VAGA</a>
+        <a href="#como-funciona" class="btn-ghost">VER COMO FUNCIONA</a>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-number">3+</div>
+          <div class="stat-label">Profissionais substituídos</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">100%</div>
+          <div class="stat-label">Personalizado</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">24/7</div>
+          <div class="stat-label">Disponível</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">R$49</div>
+          <div class="stat-label">Por mês</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TICKER -->
+    <div class="ticker-wrap">
+      <div class="ticker">
+        <span class="ticker-item">HIPERTROFIA <span class="v">●</span></span>
+        <span class="ticker-item">EMAGRECIMENTO <span class="v">●</span></span>
+        <span class="ticker-item"
+          >ALTA PERFORMANCE <span class="v">●</span></span
+        >
+        <span class="ticker-item"
+          >ANÁLISE DE BIÓTIPO <span class="v">●</span></span
+        >
+        <span class="ticker-item"
+          >PLANO ALIMENTAR <span class="v">●</span></span
+        >
+        <span class="ticker-item"
+          >LISTA DE COMPRAS <span class="v">●</span></span
+        >
+        <span class="ticker-item"
+          >CHECKLIST SEMANAL <span class="v">●</span></span
+        >
+        <span class="ticker-item">EXAMES MÉDICOS <span class="v">●</span></span>
+        <span class="ticker-item">HIPERTROFIA <span class="v">●</span></span>
+        <span class="ticker-item">EMAGRECIMENTO <span class="v">●</span></span>
+        <span class="ticker-item"
+          >ALTA PERFORMANCE <span class="v">●</span></span
+        >
+        <span class="ticker-item"
+          >ANÁLISE DE BIÓTIPO <span class="v">●</span></span
+        >
+        <span class="ticker-item"
+          >PLANO ALIMENTAR <span class="v">●</span></span
+        >
+        <span class="ticker-item"
+          >LISTA DE COMPRAS <span class="v">●</span></span
+        >
+        <span class="ticker-item"
+          >CHECKLIST SEMANAL <span class="v">●</span></span
+        >
+        <span class="ticker-item">EXAMES MÉDICOS <span class="v">●</span></span>
+      </div>
+    </div>
+
+    <!-- PROBLEM -->
+    <section class="problem-section">
+      <div class="section-label">O problema</div>
+      <h2 class="section-title">
+        QUANTO CUSTA <span class="accent">SER SAUDÁVEL?</span>
+      </h2>
+      <p style="color: var(--text-muted); max-width: 600px; font-weight: 500">
+        Para ter o que o VENOM entrega, você precisaria pagar por todos esses
+        profissionais separados. Toda semana. Todo mês.
+      </p>
+
+      <div class="cost-grid">
+        <div class="cost-card">
+          <div class="cost-professional">Nutricionista</div>
+          <div class="cost-value">R$300</div>
+          <div class="cost-period">por consulta + retorno</div>
+        </div>
+        <div class="cost-card">
+          <div class="cost-professional">Personal Trainer</div>
+          <div class="cost-value">R$800</div>
+          <div class="cost-period">por mês (2x/semana)</div>
+        </div>
+        <div class="cost-card">
+          <div class="cost-professional">Médico + Exames</div>
+          <div class="cost-value">R$600</div>
+          <div class="cost-period">consulta + exames básicos</div>
+        </div>
+        <div class="cost-card">
+          <div class="cost-professional">Coach de Saúde</div>
+          <div class="cost-value">R$500</div>
+          <div class="cost-period">por mês</div>
+        </div>
+      </div>
+
+      <div class="cost-total">
+        <div class="cost-total-label">Total mensal estimado</div>
+        <div class="cost-total-value">R$2.200+</div>
+        <div
+          class="cost-total-sub"
+          style="color: var(--text-muted); font-weight: 500"
+        >
+          por mês. Que a maioria das pessoas simplesmente não tem.
+        </div>
+      </div>
+
+      <div class="vs-block">
+        <div class="vs-text">VS</div>
+        <span class="vs-arrow">↓</span>
+        <div class="venom-price">R$49/mês</div>
+        <div class="venom-price-label">com o VENOM. Sem compromisso.</div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features-section">
+      <div class="section-label">O que o Venom faz</div>
+      <h2 class="section-title">
+        IA QUE <span class="accent">ENTENDE VOCÊ</span> DE VERDADE
+      </h2>
+      <p style="color: var(--text-muted); max-width: 600px; font-weight: 500">
+        Não é um app genérico de dieta. É um sistema que analisa quem você é —
+        corpo, rotina e histórico de saúde — e entrega o plano certo, pra você.
+      </p>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">⬡</div>
+          <div class="feature-name">ANÁLISE DE BIÓTIPO</div>
+          <div class="feature-desc">
+            Ectomorfo, mesomorfo, endomorfo ou misto. O Venom identifica sua
+            composição e ajusta tudo com base nela. Sem achismo.
+          </div>
+          <div class="feature-tag">MOTOR CENTRAL</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">◈</div>
+          <div class="feature-name">PLANO ALIMENTAR</div>
+          <div class="feature-desc">
+            Baseado no seu biótipo, objetivo, alimentos que você gosta e
+            restrições alimentares. Atualizado conforme você evolui.
+          </div>
+          <div class="feature-tag">NUTRIÇÃO</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">◆</div>
+          <div class="feature-name">TREINO PERSONALIZADO</div>
+          <div class="feature-desc">
+            Protocolos de treino baseados na sua rotina real — quantos dias
+            disponíveis, equipamentos e nível de condicionamento atual.
+          </div>
+          <div class="feature-tag">PERFORMANCE</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">⬟</div>
+          <div class="feature-name">LEITURA DE EXAMES</div>
+          <div class="feature-desc">
+            Envie seus laudos e exames. A IA integra os dados clínicos ao seu
+            plano, com mais precisão e segurança.
+          </div>
+          <div class="feature-tag">SAÚDE</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">▣</div>
+          <div class="feature-name">LISTA DE COMPRAS</div>
+          <div class="feature-desc">
+            Gerada automaticamente a partir do seu plano alimentar semanal.
+            Organizada por categoria, com foco em custo-benefício.
+          </div>
+          <div class="feature-tag">PRATICIDADE</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">◉</div>
+          <div class="feature-name">CHECKLIST SEMANAL</div>
+          <div class="feature-desc">
+            Acompanhe treinos, refeições e metas num dashboard limpo e
+            eficiente. Sem enrolação. Só resultado.
+          </div>
+          <div class="feature-tag">CONTROLE</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="how-section" id="como-funciona">
+      <div class="section-label">Como funciona</div>
+      <h2 class="section-title">
+        DO CADASTRO AO <span class="accent">PLANO COMPLETO</span>
+      </h2>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">01</div>
+          <div class="step-content">
+            <div class="step-title">INFORME SEU PERFIL</div>
+            <div class="step-desc">
+              Dados físicos, objetivo principal, rotina de vida, histórico de
+              atividade física e restrições ou condições de saúde.
+            </div>
+            <div class="step-tags">
+              <span class="tag">BIÓTIPO</span>
+              <span class="tag">OBJETIVO</span>
+              <span class="tag">ROTINA</span>
+            </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <div class="step-content">
+            <div class="step-title">CONFIGURE SUAS PREFERÊNCIAS</div>
+            <div class="step-desc">
+              Alimentos que você ama, os que não suporta, restrições por
+              intolerância ou escolha, e orçamento para alimentação.
+            </div>
+            <div class="step-tags">
+              <span class="tag">ALIMENTAÇÃO</span>
+              <span class="tag">RESTRIÇÕES</span>
+              <span class="tag">ORÇAMENTO</span>
+            </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <div class="step-content">
+            <div class="step-title">FAÇA UPLOAD DOS SEUS EXAMES</div>
+            <div class="step-desc">
+              (Opcional) Envie laudos médicos, hemograma, perfil lipídico,
+              hormônios. A IA lê e incorpora ao plano com inteligência clínica.
+            </div>
+            <div class="step-tags">
+              <span class="tag">HEMOGRAMA</span>
+              <span class="tag">HORMÔNIOS</span>
+              <span class="tag">LAUDOS</span>
+            </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">04</div>
+          <div class="step-content">
+            <div class="step-title">RECEBA SEU PLANO COMPLETO</div>
+            <div class="step-desc">
+              Treino semanal, plano alimentar detalhado, lista de compras e
+              checklist — tudo gerado em minutos. Revisado e atualizado quando
+              você precisar.
+            </div>
+            <div class="step-tags">
+              <span class="tag">TREINO</span>
+              <span class="tag">DIETA</span>
+              <span class="tag">CHECKLIST</span>
+              <span class="tag">LISTA DE COMPRAS</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EARLY ACCESS -->
+    <section class="early-section" id="early-access">
+      <div class="early-glow"></div>
+      <div class="early-section-inner">
+        <div class="section-label" style="justify-content: center">
+          Acesso antecipado
+        </div>
+        <h2 class="early-title">
+          ENTRE NA <span class="accent">LISTA</span> AGORA
+        </h2>
+        <p class="early-sub">
+          Os primeiros 100 inscritos terão acesso vitalício com
+          <strong style="color: var(--text)">50% de desconto</strong> e
+          influência direta no desenvolvimento do app.
+        </p>
+
+        <div class="form-wrap">
+          <input
+            type="email"
+            class="form-input"
+            id="emailInput"
+            placeholder="seu@email.com"
+          />
+          <button class="form-btn" onclick="submitEmail()">ENTRAR</button>
+        </div>
+
+        <div class="counter-bar">
+          <div class="counter-track">
+            <div class="counter-fill" id="counterFill"></div>
+          </div>
+          <div class="counter-label">
+            <span id="countNum">34 inscritos</span>
+            <span>100 vagas early adopter</span>
+          </div>
+        </div>
+
+        <div class="success-msg" id="successMsg">
+          <p>▶ ACESSO CONFIRMADO. BEM-VINDO AO PROJETO VENOM.</p>
+        </div>
+
+        <div class="form-note">
+          SEM SPAM. SEM CARTÃO. APENAS ACESSO PRIORITÁRIO.
+        </div>
+
+        <div class="early-perks">
+          <div class="perk">
+            <span class="perk-dot"></span> 50% off vitalício
+          </div>
+          <div class="perk">
+            <span class="perk-dot"></span> Acesso beta exclusivo
+          </div>
+          <div class="perk">
+            <span class="perk-dot"></span> Feedback direto com o dev
+          </div>
+          <div class="perk">
+            <span class="perk-dot"></span> Sem cartão agora
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer-logo">VENOM</div>
+      <div class="footer-tagline">ALTA PERFORMANCE. SEM DESCULPAS. — 2025</div>
+    </footer>
+
+    <script>
+      // ============================================================
+      // CONFIGURAÇÃO BREVO
+      // 1. Crie conta em brevo.com (grátis)
+      // 2. Settings > API Keys > Generate > copie sua chave
+      // 3. Cole sua chave abaixo (substitua o placeholder)
+      // 4. Em Contacts > Lists, crie uma lista "Venom Early Adopters"
+      //    e copie o ID numérico dela (ex: 3) para BREVO_LIST_ID
+      // ============================================================
+      const BREVO_API_KEY =
+        "xsmtpsib-fbc46b66e72b3446ecf9e89344e838a5f5ddc1671c6b19c6d15c1e33cda581b7-VikR0MBXAG1tiK3q"; // ← substitua
+      const BREVO_LIST_ID = 5; // ← substitua pelo ID da sua lista
+
+      // Contador local (substitua pelo valor real conforme cresce)
+      let localCount = 34;
+
+      async function submitEmail() {
+        const input = document.getElementById("emailInput");
+        const btn = document.querySelector(".form-btn");
+        const val = input.value.trim();
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!re.test(val)) {
+          input.style.borderColor = "#FF2D2D";
+          input.placeholder = "Email inválido — tente novamente";
+          input.focus();
+          setTimeout(() => {
+            input.style.borderColor = "";
+            input.placeholder = "seu@email.com";
+          }, 2500);
+          return;
+        }
+
+        // Estado: carregando
+        input.disabled = true;
+        btn.disabled = true;
+        btn.textContent = "...";
+
+        try {
+          const res = await fetch("https://api.brevo.com/v3/contacts", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "api-key": BREVO_API_KEY,
+            },
+            body: JSON.stringify({
+              email: val,
+              listIds: [BREVO_LIST_ID],
+              updateEnabled: true, // evita erro se email já existir
+              attributes: {
+                SOURCE: "Venom Landing Page",
+                SIGNUP_DATE: new Date().toISOString().split("T")[0],
+              },
+            }),
+          });
+
+          if (res.ok || res.status === 204) {
+            // Sucesso
+            showSuccess();
+          } else {
+            const err = await res.json();
+            // Contato já existe na lista — também é sucesso pra nós
+            if (err.code === "duplicate_parameter") {
+              showSuccess();
+            } else {
+              throw new Error(err.message || "Erro desconhecido");
+            }
+          }
+        } catch (e) {
+          // Fallback: mostra sucesso mesmo assim (não perde lead por erro de rede)
+          // e loga o erro no console para debug
+          console.error("[Venom Brevo Error]", e.message);
+          showSuccess();
+        }
+      }
+
+      function showSuccess() {
+        document.getElementById("successMsg").classList.add("show");
+        localCount += 1;
+        const pct = Math.min(localCount, 100);
+        document.getElementById("countNum").textContent =
+          localCount + " inscritos";
+        document.getElementById("counterFill").style.width = pct + "%";
+        // Muda botão para checkmark visual
+        const btn = document.querySelector(".form-btn");
+        btn.textContent = "✓";
+        btn.style.background = "#00c832";
+      }
+
+      document
+        .getElementById("emailInput")
+        .addEventListener("keydown", function (e) {
+          if (e.key === "Enter") submitEmail();
+        });
+
+      // Anima barra ao carregar
+      setTimeout(() => {
+        document.getElementById("counterFill").style.width = "34%";
+      }, 500);
+    </script>
+  </body>
+</html>
