@@ -1286,18 +1286,6 @@
     </footer>
 
     <script>
-      // ============================================================
-      // CONFIGURAÇÃO BREVO
-      // 1. Crie conta em brevo.com (grátis)
-      // 2. Settings > API Keys > Generate > copie sua chave
-      // 3. Cole sua chave abaixo (substitua o placeholder)
-      // 4. Em Contacts > Lists, crie uma lista "Venom Early Adopters"
-      //    e copie o ID numérico dela (ex: 3) para BREVO_LIST_ID
-      // ============================================================
-      const BREVO_API_KEY =
-        "xsmtpsib-fbc46b66e72b3446ecf9e89344e838a5f5ddc1671c6b19c6d15c1e33cda581b7-VikR0MBXAG1tiK3q"; // ← substitua
-      const BREVO_LIST_ID = 5; // ← substitua pelo ID da sua lista
-
       // Contador local (substitua pelo valor real conforme cresce)
       let localCount = 34;
 
@@ -1324,21 +1312,19 @@
         btn.textContent = "...";
 
         try {
-          const res = await fetch("https://api.brevo.com/v3/contacts", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "api-key": BREVO_API_KEY,
-            },
-            body: JSON.stringify({
-              email: val,
-              listIds: [BREVO_LIST_ID],
-              updateEnabled: true, // evita erro se email já existir
-              attributes: {
-                SOURCE: "Venom Landing Page",
-                SIGNUP_DATE: new Date().toISOString().split("T")[0],
-              },
-            }),
+          const res = await fetch('/api/subscribe', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: val })
+          });
+          
+          if (res.ok) {
+            showSuccess();
+          } else {
+            throw new Error('Erro ao cadastrar');
+          }
+      
+          
           });
 
           if (res.ok || res.status === 204) {
