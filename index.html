@@ -588,10 +588,22 @@
       .how-section {
         border-top: 1px solid var(--border);
         padding-top: 6rem;
+        max-width: 1200px;
+      }
+
+      .how-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        margin-top: 3rem;
+        align-items: start;
+      }
+
+      @media (max-width: 768px) {
+        .how-layout { grid-template-columns: 1fr; gap: 2.5rem; }
       }
 
       .steps {
-        margin-top: 3rem;
         position: relative;
       }
 
@@ -645,7 +657,7 @@
         font-size: 0.95rem;
         color: var(--text-muted);
         font-weight: 500;
-        max-width: 500px;
+        max-width: 400px;
       }
 
       .step-tags {
@@ -663,6 +675,150 @@
         color: var(--venom);
         border: 1px solid var(--border);
         padding: 0.2rem 0.6rem;
+      }
+
+      /* MEDIA PANEL */
+      .media-panel {
+        position: sticky;
+        top: 6rem;
+      }
+
+      .media-frame {
+        border: 1px solid var(--border-strong);
+        background: var(--surface);
+        overflow: hidden;
+        aspect-ratio: 9/16;
+        max-height: 560px;
+        position: relative;
+      }
+
+      /* Carrossel de slides */
+      .slides-track {
+        display: flex;
+        height: 100%;
+        transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
+      }
+
+      .slide {
+        min-width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Slide placeholder (substitua pela <img> ou <video> real) */
+      .slide-placeholder {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        background: var(--surface2);
+      }
+
+      .slide-placeholder-icon {
+        width: 64px;
+        height: 64px;
+        border: 1px solid var(--border-strong);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        color: var(--venom);
+      }
+
+      .slide-placeholder-label {
+        font-family: "Share Tech Mono", monospace;
+        font-size: 0.65rem;
+        letter-spacing: 3px;
+        color: var(--text-dim);
+        text-transform: uppercase;
+      }
+
+      /* Imagem/vídeo real — quando você adicionar */
+      .slide img,
+      .slide video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      /* Controles do carrossel */
+      .media-controls {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 1rem;
+        padding: 0 0.25rem;
+      }
+
+      .media-dots {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .media-dot {
+        width: 6px;
+        height: 6px;
+        background: var(--text-dim);
+        border-radius: 50%;
+        cursor: pointer;
+        transition: background 0.2s, transform 0.2s;
+        border: none;
+        padding: 0;
+      }
+
+      .media-dot.active {
+        background: var(--venom);
+        transform: scale(1.3);
+      }
+
+      .media-arrows {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .media-arrow {
+        width: 32px;
+        height: 32px;
+        border: 1px solid var(--border-strong);
+        background: var(--surface);
+        color: var(--venom);
+        font-size: 0.9rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+      }
+
+      .media-arrow:hover { background: var(--surface3); }
+
+      .media-caption {
+        margin-top: 0.75rem;
+        font-family: "Share Tech Mono", monospace;
+        font-size: 0.65rem;
+        letter-spacing: 2px;
+        color: var(--text-dim);
+        text-align: center;
+      }
+
+      .media-upload-hint {
+        margin-top: 0.5rem;
+        font-size: 0.75rem;
+        color: var(--text-dim);
+        text-align: center;
+        border: 1px dashed var(--border);
+        padding: 0.5rem;
+        font-family: "Share Tech Mono", monospace;
+        letter-spacing: 1px;
+        font-size: 0.6rem;
       }
 
       /* EARLY ACCESS SECTION */
@@ -1152,69 +1308,135 @@
         DO CADASTRO AO <span class="accent">PLANO COMPLETO</span>
       </h2>
 
-      <div class="steps">
-        <div class="step">
-          <div class="step-num">01</div>
-          <div class="step-content">
-            <div class="step-title">INFORME SEU PERFIL</div>
-            <div class="step-desc">
-              Dados físicos, objetivo principal, rotina de vida, histórico de
-              atividade física e restrições ou condições de saúde.
+      <div class="how-layout">
+
+        <!-- COLUNA ESQUERDA: passos -->
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">01</div>
+            <div class="step-content">
+              <div class="step-title">INFORME SEU PERFIL</div>
+              <div class="step-desc">
+                Dados físicos, objetivo principal, rotina de vida, histórico de
+                atividade física e restrições ou condições de saúde.
+              </div>
+              <div class="step-tags">
+                <span class="tag">BIÓTIPO</span>
+                <span class="tag">OBJETIVO</span>
+                <span class="tag">ROTINA</span>
+              </div>
             </div>
-            <div class="step-tags">
-              <span class="tag">BIÓTIPO</span>
-              <span class="tag">OBJETIVO</span>
-              <span class="tag">ROTINA</span>
+          </div>
+          <div class="step">
+            <div class="step-num">02</div>
+            <div class="step-content">
+              <div class="step-title">CONFIGURE SUAS PREFERÊNCIAS</div>
+              <div class="step-desc">
+                Alimentos que você ama, os que não suporta, restrições por
+                intolerância ou escolha, e orçamento para alimentação.
+              </div>
+              <div class="step-tags">
+                <span class="tag">ALIMENTAÇÃO</span>
+                <span class="tag">RESTRIÇÕES</span>
+                <span class="tag">ORÇAMENTO</span>
+              </div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">03</div>
+            <div class="step-content">
+              <div class="step-title">FAÇA UPLOAD DOS SEUS EXAMES</div>
+              <div class="step-desc">
+                (Opcional) Envie laudos médicos, hemograma, perfil lipídico,
+                hormônios. A IA lê e incorpora ao plano com inteligência clínica.
+              </div>
+              <div class="step-tags">
+                <span class="tag">HEMOGRAMA</span>
+                <span class="tag">HORMÔNIOS</span>
+                <span class="tag">LAUDOS</span>
+              </div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">04</div>
+            <div class="step-content">
+              <div class="step-title">RECEBA SEU PLANO COMPLETO</div>
+              <div class="step-desc">
+                Treino semanal, plano alimentar detalhado, lista de compras e
+                checklist — tudo gerado em minutos. Revisado e atualizado quando
+                você precisar.
+              </div>
+              <div class="step-tags">
+                <span class="tag">TREINO</span>
+                <span class="tag">DIETA</span>
+                <span class="tag">CHECKLIST</span>
+                <span class="tag">LISTA DE COMPRAS</span>
+              </div>
             </div>
           </div>
         </div>
-        <div class="step">
-          <div class="step-num">02</div>
-          <div class="step-content">
-            <div class="step-title">CONFIGURE SUAS PREFERÊNCIAS</div>
-            <div class="step-desc">
-              Alimentos que você ama, os que não suporta, restrições por
-              intolerância ou escolha, e orçamento para alimentação.
-            </div>
-            <div class="step-tags">
-              <span class="tag">ALIMENTAÇÃO</span>
-              <span class="tag">RESTRIÇÕES</span>
-              <span class="tag">ORÇAMENTO</span>
-            </div>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num">03</div>
-          <div class="step-content">
-            <div class="step-title">FAÇA UPLOAD DOS SEUS EXAMES</div>
-            <div class="step-desc">
-              (Opcional) Envie laudos médicos, hemograma, perfil lipídico,
-              hormônios. A IA lê e incorpora ao plano com inteligência clínica.
-            </div>
-            <div class="step-tags">
-              <span class="tag">HEMOGRAMA</span>
-              <span class="tag">HORMÔNIOS</span>
-              <span class="tag">LAUDOS</span>
-            </div>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num">04</div>
-          <div class="step-content">
-            <div class="step-title">RECEBA SEU PLANO COMPLETO</div>
-            <div class="step-desc">
-              Treino semanal, plano alimentar detalhado, lista de compras e
-              checklist — tudo gerado em minutos. Revisado e atualizado quando
-              você precisar.
-            </div>
-            <div class="step-tags">
-              <span class="tag">TREINO</span>
-              <span class="tag">DIETA</span>
-              <span class="tag">CHECKLIST</span>
-              <span class="tag">LISTA DE COMPRAS</span>
+
+        <!-- COLUNA DIREITA: carrossel de mídia -->
+        <div class="media-panel">
+          <div class="media-frame">
+            <div class="slides-track" id="slidesTrack">
+
+              <!-- SLIDE 1 — substitua pelo seu conteúdo real -->
+              <!-- Para imagem: <img src="sua-imagem.png" alt="Tela biótipo"> -->
+              <!-- Para vídeo: <video src="seu-video.mp4" autoplay muted loop playsinline></video> -->
+              <div class="slide">
+                <div class="slide-placeholder">
+                  <div class="slide-placeholder-icon">⬡</div>
+                  <div class="slide-placeholder-label">Tela de biótipo</div>
+                </div>
+              </div>
+
+              <!-- SLIDE 2 -->
+              <div class="slide">
+                <div class="slide-placeholder">
+                  <div class="slide-placeholder-icon">◈</div>
+                  <div class="slide-placeholder-label">Plano alimentar</div>
+                </div>
+              </div>
+
+              <!-- SLIDE 3 -->
+              <div class="slide">
+                <div class="slide-placeholder">
+                  <div class="slide-placeholder-icon">◆</div>
+                  <div class="slide-placeholder-label">Treino semanal</div>
+                </div>
+              </div>
+
+              <!-- SLIDE 4 -->
+              <div class="slide">
+                <div class="slide-placeholder">
+                  <div class="slide-placeholder-icon">▣</div>
+                  <div class="slide-placeholder-label">Lista de compras</div>
+                </div>
+              </div>
+
             </div>
           </div>
+
+          <div class="media-controls">
+            <div class="media-dots" id="mediaDots">
+              <button class="media-dot active" onclick="goToSlide(0)"></button>
+              <button class="media-dot" onclick="goToSlide(1)"></button>
+              <button class="media-dot" onclick="goToSlide(2)"></button>
+              <button class="media-dot" onclick="goToSlide(3)"></button>
+            </div>
+            <div class="media-arrows">
+              <button class="media-arrow" onclick="prevSlide()">&#8592;</button>
+              <button class="media-arrow" onclick="nextSlide()">&#8594;</button>
+            </div>
+          </div>
+
+          <div class="media-caption" id="mediaCaption">INTERFACE DO APP — TELA 1/4</div>
+          <div class="media-upload-hint">
+            SUBSTITUA OS SLIDES PELAS SUAS CAPTURAS DE TELA OU VÍDEO REAL DO APP
+          </div>
         </div>
+
       </div>
     </section>
 
@@ -1286,14 +1508,13 @@
     </footer>
 
     <script>
-      // Contador local (substitua pelo valor real conforme cresce)
       let localCount = 34;
 
       async function submitEmail() {
         const input = document.getElementById("emailInput");
-        const btn = document.querySelector(".form-btn");
-        const val = input.value.trim();
-        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const btn   = document.querySelector(".form-btn");
+        const val   = input.value.trim();
+        const re    = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         if (!re.test(val)) {
           input.style.borderColor = "#FF2D2D";
@@ -1306,43 +1527,24 @@
           return;
         }
 
-        // Estado: carregando
-        input.disabled = true;
-        btn.disabled = true;
+        input.disabled  = true;
+        btn.disabled    = true;
         btn.textContent = "...";
 
         try {
-          const res = await fetch('/api/subscribe', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+          const res = await fetch("/api/subscribe", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email: val })
           });
-          
+
           if (res.ok) {
             showSuccess();
           } else {
-            throw new Error('Erro ao cadastrar');
-          }
-      
-          
-          });
-
-          if (res.ok || res.status === 204) {
-            // Sucesso
-            showSuccess();
-          } else {
-            const err = await res.json();
-            // Contato já existe na lista — também é sucesso pra nós
-            if (err.code === "duplicate_parameter") {
-              showSuccess();
-            } else {
-              throw new Error(err.message || "Erro desconhecido");
-            }
+            throw new Error("Erro ao cadastrar");
           }
         } catch (e) {
-          // Fallback: mostra sucesso mesmo assim (não perde lead por erro de rede)
-          // e loga o erro no console para debug
-          console.error("[Venom Brevo Error]", e.message);
+          console.error("[Venom Error]", e.message);
           showSuccess();
         }
       }
@@ -1351,25 +1553,51 @@
         document.getElementById("successMsg").classList.add("show");
         localCount += 1;
         const pct = Math.min(localCount, 100);
-        document.getElementById("countNum").textContent =
-          localCount + " inscritos";
+        document.getElementById("countNum").textContent = localCount + " inscritos";
         document.getElementById("counterFill").style.width = pct + "%";
-        // Muda botão para checkmark visual
         const btn = document.querySelector(".form-btn");
         btn.textContent = "✓";
         btn.style.background = "#00c832";
       }
 
-      document
-        .getElementById("emailInput")
-        .addEventListener("keydown", function (e) {
-          if (e.key === "Enter") submitEmail();
-        });
+      document.getElementById("emailInput").addEventListener("keydown", function(e) {
+        if (e.key === "Enter") submitEmail();
+      });
 
-      // Anima barra ao carregar
       setTimeout(() => {
         document.getElementById("counterFill").style.width = "34%";
       }, 500);
+      // ── CARROSSEL DE MÍDIA ──────────────────────────────
+      let currentSlide = 0;
+      const totalSlides = 4;
+      const captions = [
+        "INTERFACE DO APP — TELA 1/4",
+        "INTERFACE DO APP — TELA 2/4",
+        "INTERFACE DO APP — TELA 3/4",
+        "INTERFACE DO APP — TELA 4/4"
+      ];
+
+      function goToSlide(n) {
+        currentSlide = n;
+        document.getElementById("slidesTrack").style.transform = "translateX(-" + (n * 100) + "%)";
+        document.querySelectorAll(".media-dot").forEach(function(d, i) {
+          d.classList.toggle("active", i === n);
+        });
+        document.getElementById("mediaCaption").textContent = captions[n];
+      }
+
+      function nextSlide() {
+        goToSlide((currentSlide + 1) % totalSlides);
+      }
+
+      function prevSlide() {
+        goToSlide((currentSlide - 1 + totalSlides) % totalSlides);
+      }
+
+      // Auto-avança a cada 4 segundos
+      setInterval(nextSlide, 4000);
+      // ────────────────────────────────────────────────────
+
     </script>
   </body>
 </html>
